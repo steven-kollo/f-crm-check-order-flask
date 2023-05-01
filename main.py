@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import query
 app = Flask(__name__)
 
 
@@ -9,12 +10,9 @@ def home():
 
 @app.route('/find/<string:id>&<string:phone>&<string:email>')
 def find(id, phone, email):
-    print(id)
-    return {
-        'id': id,
-        'phone': phone,
-        'email': email
-    }
+    res = query.run_query(id, phone, email)
+    print(res)
+    return res
 
 
 if __name__ == '__main__':
