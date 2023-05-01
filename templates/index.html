@@ -1,0 +1,139 @@
+<html>
+
+<head>
+    <title>Find My Order</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="canonical" href="https://icons.getbootstrap.com/">
+</head>
+
+<body>
+    <style>
+        form {
+            width: 100%;
+            min-width: 300px;
+            max-width: 400px;
+            padding: 20px;
+            margin: 0 auto;
+            background: #ffffff59;
+            -webkit-box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);
+            -moz-box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);
+            box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);
+        }
+
+        /* form input {
+            border: 1px solid #eee;
+            border-radius: 0 !important;
+            padding: 5px 8px;
+            color: #444;
+        } */
+
+        form button {
+            color: #555;
+            background: #ffffffad;
+            border: 1px solid #fff !important;
+            margin-top: 20px;
+            border-radius: 0px Important;
+        }
+
+        form button:hover {
+            background: #fff !important;
+        }
+
+        .pull-right {
+            float: right;
+        }
+
+        body {
+            background: #70e1f5;
+            background: -webkit-linear-gradient(to right, #ffd194, #70e1f5);
+            background: linear-gradient(to right, #ffd194, #70e1f5);
+        }
+    </style>
+    <div class="container">
+        <form>
+            <h3>Find my order</h3>
+            <a>(Fulfill at least one field)</a>
+            <hr>
+            <div class="form-group">
+                <label for="name">Order ID :</label>
+                <input placeholder="S-53-1234" type="text" class="form-control" id="order_id">
+            </div>
+            <div class="form-group">
+                <label for="name">Email :</label>
+                <input type="text" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+                <label for="name">Phone number :</label>
+                <input type="text" class="form-control" id="phone">
+            </div>
+
+            <button type="button" class="btn" onclick="find()">Find</button>
+        </form>
+    </div>
+</body>
+<script type=text/javascript>
+    function find (params) {
+        const email = document.getElementById("email").value
+        const phone = document.getElementById("phone").value
+        const order_id = document.getElementById("order_id").value
+        fields = process_fields(email, phone, order_id)
+        fetchReq(fields)
+    }
+
+    function fetchReq(fields) {
+
+        fetch(`/find/id=${fields.order_id}&phone=${fields.phone}&email=${fields.email}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+            })
+    }
+
+    function process_fields (email, phone, order_id) {
+        let res = {
+            phone: "none",
+            email: "none",
+            order_id: "none"
+        }
+        if (validate_email(email) == true) {
+            res.email = email
+        }
+        if (validate_id(order_id) == true) {
+            res.order_id = order_id
+        }
+        if (validate_phone(phone) == true) {
+            res.phone = phone.toString().replace('+','').replace(' ', '').replace('(','').replace(')','')
+        }
+        return res
+    }
+    
+    function validate_email (str) {
+        if ( str.toString().indexOf('@') != -1 ) return true
+        return false
+    }
+
+    function validate_phone (phone) {
+        if (phone == '') return false
+        let processed = phone.toString().replace('+','').replace(' ', '').replace('(','').replace(')','')
+        if(Number(processed) == Number(processed) * 1) return true
+    }
+
+    function validate_id (id) {
+        id = id.toString()
+        if (
+            ( id.length == 9 || id.length == 8 ) &&
+            ( id.charAt(0) == 'S' || id.charAt(0) == 'M' || id.charAt(0) == 'R' || id.charAt(0) == 'C' ) &&
+            ( id.charAt(1) == '-' && (id.charAt(3) == '-' || id.charAt(4) == '-') )
+            ) return true 
+        return false
+    }
+
+</script>
+
+</html>
