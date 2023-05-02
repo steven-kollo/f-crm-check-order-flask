@@ -1,3 +1,4 @@
 Flask==2.1.0
 google-api-python-client
 google-cloud
+google-cloud-bigquery==3.35
