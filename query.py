@@ -5,7 +5,9 @@ def set_where_statement(id, email, phone, client):
     if (email != 'none'):
         where_statements.append(f"client_email='{email}'")
     if (phone != 'none'):
-        where_statements.append(f"uuid IN ({match_phones(phone, client)})")
+        uuids = match_phones(phone, client)
+        if (uuids != False):
+            where_statements.append(f"uuid IN ({uuids})")
 
     if (where_statements != []):
         WHERE_STATEMENT = 'WHERE ' + ' OR '.join(where_statements)
