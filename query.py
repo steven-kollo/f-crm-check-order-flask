@@ -1,11 +1,11 @@
-def set_where_statement(id, email, phone):
+def set_where_statement(id, email, phone, client):
     where_statements = []
     if (id != 'none'):
         where_statements.append(f"order_search_id='{id}'")
     if (email != 'none'):
         where_statements.append(f"client_email='{email}'")
     if (phone != 'none'):
-        where_statements.append(f"uuid IN ({match_phones(phone)})")
+        where_statements.append(f"uuid IN ({match_phones(phone, client)})")
 
     if (where_statements != []):
         WHERE_STATEMENT = 'WHERE ' + ' OR '.join(where_statements)
@@ -14,7 +14,7 @@ def set_where_statement(id, email, phone):
 
 
 def run_query(id, email, phone, client):
-    WHERE_STATEMENT = set_where_statement(id, email, phone)
+    WHERE_STATEMENT = set_where_statement(id, email, phone, client)
     if (WHERE_STATEMENT == False):
         return
     query = f"""
@@ -34,7 +34,7 @@ def run_query(id, email, phone, client):
     return 'works'
 
 
-def query_phones():  # PHONE NUMBERS
+def query_phones(client):  # PHONE NUMBERS
     query = f"""
         SELECT uuid, client_phone
         FROM `florissimo-378500.main.orders`
@@ -59,9 +59,9 @@ def clear_phone_number(phone):
     return phone.replace("+", "").replace(" ", "").replace("(", "").replace(")", "")[-9:]
 
 
-def match_phones(phone):
+def match_phones(phone, client):
     clear_number = clear_phone_number(phone)
-    phones = query_phones()
+    phones = query_phones(client)
     if (clear_number in phones):
         res = ''
         uuids = phones[clear_number]
