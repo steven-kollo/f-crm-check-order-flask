@@ -12,7 +12,10 @@ def home():
 
 @app.route('/find/<string:id>&<string:phone>&<string:email>')
 def find(id, phone, email):
-    res = query.run_query(id, phone, email, client)
+    print(id)
+    print(email)
+    print(phone)
+    res = query.run_query(id, email, phone, client)
     print(res)
     return {
         "id": id,
