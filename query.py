@@ -24,6 +24,8 @@ def run_query(id, email, phone, client):
         ORDER BY order_created_datetime DESC
         LIMIT 10
     """
+    print('=====QUERY=====')
+    print(query)
     query_job = client.query(query)
 
     print("The query data:")
