@@ -1,7 +1,8 @@
-import query
 from flask import Flask, render_template
-from google.cloud import bigquery
-client = bigquery.Client()
+
+# import query
+# from google.cloud import bigquery
+# client = bigquery.Client()
 app = Flask(__name__)
 
 
@@ -15,19 +16,19 @@ def find(id, phone, email):
     print(id[3:])
     print(email[6:])
     print(phone[6:])
-    orders = query.run_query(id[3:], email[6:], phone[6:], client)
-    print(orders)
-    res = []
-    for order in orders:
-        res.append({
-            "order_search_id": order[0],
-            "order_product": order[1],
-            "order_status": order[2],
-            "date_delivery": order[3]
-        })
-    return {
-        "orders": res
-    }
+    # orders = query.run_query(id[3:], email[6:], phone[6:], client)
+    # print(orders)
+    # res = []
+    # for order in orders:
+    #     res.append({
+    #         "order_search_id": order[0],
+    #         "order_product": order[1],
+    #         "order_status": order[2],
+    #         "date_delivery": order[3]
+    #     })
+    # return {
+    #     "orders": res
+    # }
 
 
 if __name__ == '__main__':

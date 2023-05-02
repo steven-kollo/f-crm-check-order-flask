@@ -31,6 +31,8 @@ def run_query(id, email, phone, client):
     query_job = client.query(query)
     res = []
     for row in query_job:
+        if (row["order_status"] == "matched" or row["order_status"] == "checkout"):
+            pass
         res.append([row["order_search_id"],
                    row["order_product"], row["order_status"], row["order_delivery_date"]])
 
