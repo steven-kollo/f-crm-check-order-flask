@@ -87,7 +87,7 @@
     }
 
     function fetchReq(fields) {
-
+        console.log(fields)
         fetch(`/find/id=${fields.order_id}&phone=${fields.phone}&email=${fields.email}`)
             .then(response => response.json())
             .then(data => {
