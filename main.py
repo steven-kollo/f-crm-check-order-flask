@@ -15,12 +15,17 @@ def find(id, phone, email):
     print(id[3:])
     print(email[6:])
     print(phone[6:])
-    res = query.run_query(id[3:], email[6:], phone[6:], client)
-    print(res)
+    orders = query.run_query(id[3:], email[6:], phone[6:], client)
+    print(orders)
+    res = []
+    for order in orders:
+        res.append({
+            "order_search_id": order[0],
+            "order_product": order[1],
+            "order_status": order[2]
+        })
     return {
-        "order_search_id": res[0][0],
-        "order_product": res[0][1],
-        "order_status": res[0][2]
+        "orders": res
     }
 
 
