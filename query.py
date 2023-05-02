@@ -29,13 +29,12 @@ def run_query(id, email, phone, client):
     print('=====QUERY=====')
     print(query)
     query_job = client.query(query)
-
-    print("The query data:")
+    res = []
     for row in query_job:
+        res.append([row["order_search_id"],
+                   row["order_product"], row["order_status"]])
 
-        print("id={}, product={}, status={}".format(
-            row["order_search_id"], row["order_product"], row["order_status"]))
-    return 'works'
+    return res
 
 
 def query_phones(client):  # PHONE NUMBERS

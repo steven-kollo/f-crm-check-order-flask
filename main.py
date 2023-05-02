@@ -18,9 +18,9 @@ def find(id, phone, email):
     res = query.run_query(id[3:], email[6:], phone[6:], client)
     print(res)
     return {
-        "id": id,
-        "phone": phone,
-        "email": email
+        "order_search_id": res[0][0],
+        "order_product": res[0][1],
+        "order_status": res[0][2]
     }
 
 
