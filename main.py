@@ -22,7 +22,8 @@ def find(id, phone, email):
         res.append({
             "order_search_id": order[0],
             "order_product": order[1],
-            "order_status": order[2]
+            "order_status": order[2],
+            "date_delivery": order[3]
         })
     return {
         "orders": res
