@@ -1,7 +1,3 @@
-from google.cloud import bigquery
-client = bigquery.Client()
-
-
 def set_where_statement(id, email, phone):
     where_statements = []
     if (id != 'none'):
@@ -17,7 +13,7 @@ def set_where_statement(id, email, phone):
     return False
 
 
-def run_query(id, email, phone):
+def run_query(id, email, phone, client):
     WHERE_STATEMENT = set_where_statement(id, email, phone)
     if (WHERE_STATEMENT == False):
         return
@@ -35,6 +31,7 @@ def run_query(id, email, phone):
 
         print("id={}, product={}, status={}".format(
             row["order_search_id"], row["order_product"], row["order_status"]))
+    return 'works'
 
 
 def query_phones():  # PHONE NUMBERS
@@ -76,6 +73,3 @@ def match_phones(phone):
         return res
     else:
         return False
-
-
-run_query(id='S-35-1896', email='none', phone='33643665251')

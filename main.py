@@ -1,5 +1,7 @@
-from flask import Flask, render_template
 import query
+from flask import Flask, render_template
+from google.cloud import bigquery
+client = bigquery.Client()
 app = Flask(__name__)
 
 
@@ -10,9 +12,13 @@ def home():
 
 @app.route('/find/<string:id>&<string:phone>&<string:email>')
 def find(id, phone, email):
-    res = query.run_query(id, phone, email)
+    res = query.run_query(id, phone, email, client)
     print(res)
-    return res
+    return {
+        "id": id,
+        "phone": phone,
+        "email": email
+    }
 
 
 if __name__ == '__main__':
