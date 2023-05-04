@@ -1,5 +1,6 @@
 .container {
     max-width: 100%;
+    min-height: 470px;
     padding: 0px !important;
     margin: 0px;
     display: flex;
@@ -12,6 +13,10 @@
     margin: 0px;
     display: flex;
     justify-content: right;
+}
+
+table {
+    width: 100%;
 }
 
 .logo {

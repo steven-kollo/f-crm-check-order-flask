@@ -1,50 +1,60 @@
-const example_json = [
-    {
-        "date_delivery": "Thu, 13 Apr 2023 00:00:00 GMT",
-        "order_product": "Cajita petit",
-        "order_search_id": "S-11-1874",
-        "order_status": "delivered"
-    },
-    {
-        "date_delivery": "Tue, 21 Mar 2023 00:00:00 GMT",
-        "order_product": "Caja San Valentín M",
-        "order_search_id": "S-62-1841",
-        "order_status": "new"
-    }
-]
-
-function find() {
-    document.getElementById("email").disabled = true
-    document.getElementById("order_id").disabled = true
-    document.getElementById("phone").disabled = true
+async function find() {
     document.getElementById("find_button").disabled = true
     document.getElementById("spinner").style = ""
     const email = document.getElementById("email").value
     const phone = document.getElementById("phone").value
     const order_id = document.getElementById("order_id").value
     let fields = process_fields(email, phone, order_id)
-    let json = fetchReq(fields)
-    let data = process_json(json)
-    console.log(data)
+    let data = await fetchReq(fields)
+    paste_orders_data(data.orders)
+    console.log("Done!")
 }
 
-function show_orders(data) {
+function create_badge(status) {
+    if (status == "delivered") {
+        return '<span style="font-size:15px;" class="badge badge-pill bg-success">Entregado</span>'
+    }
+    if (status == "cancelled") {
+        return '<span style="font-size:15px;" class="badge bg-pill bg-secondary">Cancelada</span>'
+    }
+    if (status == "sent") {
+        return '<span style="font-size:15px;" class="badge bg-pill bg-primary">Entregando</span>'
+    }
+    return '<span style="font-size:15px" class="badge bg-pill bg-primary">En curso</span>'
 
 }
 
-function process_json(json) {
-    return json
+function create_single_order_html(order) {
+    html = `
+    <div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+            <div>
+                <b><a>${order.order_search_id}</a></b>
+                ${create_badge(order.order_status)}
+            </div>
+            <a>Fecha de pedido: ${order.date_delivery}</a>
+        </div>
+        <a><b>Detalles del pedido:</b> ${order.order_product}</a>
+    </div>
+    <hr>
+    `
+    return html
 }
 
-function fetchReq(fields) {
-    return example_json
-    let json
-    fetch(`/find/id=${fields.order_id}&phone=${fields.phone}&email=${fields.email}`)
-        .then(response => response.json())
-        .then(data => {
-            json = data
-        })
-    return json
+function paste_orders_data(orders) {
+    document.getElementById("spinner").style = "display: none;"
+    document.getElementById("find_button").disabled = false
+    document.getElementById("find_button").innerText = "Find more"
+    let html = ``
+    orders.forEach(order => {
+        html = html + create_single_order_html(order)
+    })
+    document.getElementById("search-results-container").innerHTML = html
+}
+
+async function fetchReq(fields) {
+    let res = await fetch(`/find/${fields.order_id}&${fields.phone}&${fields.email}`)
+    return await res.json()
 }
 
 function process_fields(email, phone, order_id) {
