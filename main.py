@@ -1,8 +1,8 @@
 from flask import Flask, render_template
 from datetime import datetime
-# import query
-# from google.cloud import bigquery
-# client = bigquery.Client()
+import query
+from google.cloud import bigquery
+client = bigquery.Client()
 app = Flask(__name__)
 
 
