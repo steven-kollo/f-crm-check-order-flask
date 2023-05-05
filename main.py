@@ -13,21 +13,6 @@ def home():
 
 @app.route('/find/<string:id>&<string:phone>&<string:email>')
 def find(id, phone, email):
-    # example_json = [
-    #     {
-    #         "date_delivery": "Tue, 21 Mar 2023 00:00:00 GMT",
-    #         "order_product": "Cajita petit",
-    #         "order_search_id": "S-11-1874",
-    #         "order_status": "delivered"
-    #     },
-    #     {
-    #         "date_delivery": "Thu, 11 May 2023 00:00:00 GMT",
-    #         "order_product": "Caja San Valentín M",
-    #         "order_search_id": "S-62-1841",
-    #         "order_status": "new"
-    #     }
-    # ]
-
     orders = query.run_query(id, email, phone, client)
     print(orders)
     res = []

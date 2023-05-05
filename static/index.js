@@ -74,6 +74,7 @@ function process_fields(email, phone, order_id) {
     if (validate_phone(phone) == true) {
         res.phone = phone.toString().replace('+', '').replace(' ', '').replace('(', '').replace(')', '')
     }
+    console.log(res)
     return res
 }
 
@@ -85,6 +86,8 @@ function validate_email(str) {
 function validate_phone(phone) {
     if (phone == '') return false
     let processed = phone.toString().replace('+', '').replace(' ', '').replace('(', '').replace(')', '')
+    console.log(processed)
+    console.log(Number(processed))
     if (Number(processed) == Number(processed) * 1) return true
 }
 
