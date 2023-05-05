@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
 
 def get_current_orders(orders):
-    today = datetime.today()
+    today = datetime.date.today()
     current_orders = []
     orders.sort(key=lambda x: x[3], reverse=True)
     print(orders)
