@@ -47,9 +47,17 @@ function paste_orders_data(orders) {
     document.getElementById("find_button").disabled = false
     document.getElementById("find_button").innerText = "Find more"
     let html = ``
-    orders.forEach(order => {
-        html = html + create_single_order_html(order)
-    })
+    if (orders.length == 0) {
+        html = `
+            <p>No se encontró nada para su solicitud</p>
+            <hr>
+        `
+    } else {
+        orders.forEach(order => {
+            html = html + create_single_order_html(order)
+        })
+    }
+
     document.getElementById("search-results-container").innerHTML = html
 }
 
@@ -61,7 +69,7 @@ async function fetchReq(fields) {
 
 function process_fields(email, phone, order_id) {
     let res = {
-        phone: "none",
+        phone: "0",
         email: "none",
         order_id: "none"
     }
