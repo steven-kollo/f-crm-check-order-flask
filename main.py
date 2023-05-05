@@ -52,14 +52,12 @@ if __name__ == '__main__':
 def get_current_orders(orders):
     today = datetime.today()
     current_orders = []
-    for order in orders:
-        order[0][3] = date_from_string(order[0][3])
-    orders.sort(key=lambda x: x[0][3], reverse=True)
+    orders.sort(key=lambda x: x[3], reverse=True)
     print(orders)
     for order in orders:
         print(order)
-        if (order[0][3] >= today and order[0][2] != "matched" and order[0][2] != "checkout"):
-            order[0][3] = order[0][3].strftime(
+        if (order[3] >= today and order[2] != "matched" and order[2] != "checkout"):
+            order[3] = order[3].strftime(
                 "%d/%m/%Y")
             current_orders.append(order)
     return current_orders
