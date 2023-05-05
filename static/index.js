@@ -45,7 +45,7 @@ function create_single_order_html(order) {
 function paste_orders_data(orders) {
     document.getElementById("spinner").style = "display: none;"
     document.getElementById("find_button").disabled = false
-    document.getElementById("find_button").innerText = "Find more"
+    document.getElementById("find_button").innerText = "Busca mas"
     let html = ``
     if (orders.length == 0) {
         html = `
