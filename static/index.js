@@ -6,8 +6,9 @@ async function find() {
     const order_id = document.getElementById("order_id").value
     let fields = process_fields(email, phone, order_id)
     let data = await fetchReq(fields)
-    paste_orders_data(data.orders)
-    console.log("Done!")
+    await console.log(data)
+    // paste_orders_data(data)
+    // console.log("Done!")
 }
 
 function create_badge(status) {
@@ -55,8 +56,7 @@ function paste_orders_data(orders) {
 async function fetchReq(fields) {
     let res = await fetch(`/find/${fields.order_id}&${fields.phone}&${fields.email}`)
     let json = await res.json()
-    console.log(json)
-    return json
+    return json.orders
 }
 
 function process_fields(email, phone, order_id) {
