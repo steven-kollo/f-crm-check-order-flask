@@ -53,13 +53,13 @@ def get_current_orders(orders):
     today = datetime.today()
     current_orders = []
     for order in orders:
-        order["date_delivery"] = date_from_string(order["date_delivery"])
-    orders.sort(key=lambda x: x["date_delivery"], reverse=True)
-
+        order[0][3] = date_from_string(order[0][3])
+    orders.sort(key=lambda x: x[0][3], reverse=True)
+    print(orders)
     for order in orders:
         print(order)
-        if (order["date_delivery"] >= today and order["order_status"] != "matched" and order["order_status"] != "checkout"):
-            order["date_delivery"] = order["date_delivery"].strftime(
+        if (order[0][3] >= today and order[0][2] != "matched" and order[0][2] != "checkout"):
+            order[0][3] = order[0][3].strftime(
                 "%d/%m/%Y")
             current_orders.append(order)
     return current_orders
