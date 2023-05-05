@@ -57,6 +57,7 @@ def get_current_orders(orders):
     orders.sort(key=lambda x: x["date_delivery"], reverse=True)
 
     for order in orders:
+        print(order)
         if (order["date_delivery"] >= today and order["order_status"] != "matched" and order["order_status"] != "checkout"):
             order["date_delivery"] = order["date_delivery"].strftime(
                 "%d/%m/%Y")
