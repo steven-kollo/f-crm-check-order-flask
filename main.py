@@ -29,7 +29,6 @@ def find(id, phone, email):
     # ]
 
     orders = query.run_query(id, email, phone, client)
-    print(orders)
     res = []
     for order in orders:
         res.append({
@@ -39,7 +38,8 @@ def find(id, phone, email):
             "date_delivery": order[3]
         })
     current_orders = get_current_orders(orders)
-
+    print("CURRENT_ORDERS:")
+    print(current_orders)
     return {
         "orders": current_orders
     }
@@ -53,9 +53,7 @@ def get_current_orders(orders):
     today = datetime.today().date()
     current_orders = []
     orders.sort(key=lambda x: x[3], reverse=True)
-    print(orders)
     for order in orders:
-        print(order)
         if (order[3] >= today and order[2] != "matched" and order[2] != "checkout"):
             order[3] = order[3].strftime(
                 "%d/%m/%Y")
