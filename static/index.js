@@ -62,9 +62,15 @@ function paste_orders_data(orders) {
 }
 
 async function fetchReq(fields) {
-    let res = await fetch(`/find/${fields.order_id}&${fields.phone}&${fields.email}`)
-    let json = await res.json()
-    return json.orders
+    try {
+        let res = await fetch(`/find/${fields.order_id}&${fields.phone}&${fields.email}`)
+        let json = await res.json()
+        return json.orders
+    } catch (e) {
+        console.log(e)
+        return []
+    }
+
 }
 
 function process_fields(email, phone, order_id) {
