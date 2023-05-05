@@ -7,8 +7,8 @@ async function find() {
     let fields = process_fields(email, phone, order_id)
     let data = await fetchReq(fields)
     await console.log(data)
-    // paste_orders_data(data)
-    // console.log("Done!")
+    paste_orders_data(data)
+    console.log("Done!")
 }
 
 function create_badge(status) {
