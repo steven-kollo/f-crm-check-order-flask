@@ -52,8 +52,6 @@ if __name__ == '__main__':
 def get_current_orders(orders):
     today = datetime.today().date()
     current_orders = []
-    for order in orders:
-        order["date_delivery"] = date_from_string(order["date_delivery"])
     orders.sort(key=lambda x: x["date_delivery"], reverse=True)
 
     for order in orders:
@@ -62,7 +60,3 @@ def get_current_orders(orders):
                 "%d/%m/%Y")
             current_orders.append(order)
     return current_orders
-
-
-def date_from_string(str):
-    return datetime.strptime(str, "%a, %d %b %Y %H:%M:%S %Z")
