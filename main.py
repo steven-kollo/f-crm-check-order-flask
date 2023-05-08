@@ -21,7 +21,9 @@ def find(id, phone, email):
             "order_search_id": order[0],
             "order_product": order[1],
             "order_status": order[2],
-            "date_delivery": order[3]
+            "date_delivery": order[3],
+            "time_delivery": order[4],
+            "client_name": order[5],
         })
     current_orders = get_current_orders(res)
 

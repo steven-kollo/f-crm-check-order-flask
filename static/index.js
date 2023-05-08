@@ -33,9 +33,9 @@ function create_single_order_html(order) {
                 <b><a>${order.order_search_id}</a></b>
                 ${create_badge(order.order_status)}
             </div>
-            <a>Fecha de pedido: ${order.date_delivery}</a>
+            <a>Fecha de pedido: ${order.date_delivery} | ${order.time_delivery}</a>
         </div>
-        <a><b>Detalles del pedido:</b> ${order.order_product}</a>
+        <a><b>Orden para:</b> ${order.client_name}</a>
     </div>
     <hr>
     `

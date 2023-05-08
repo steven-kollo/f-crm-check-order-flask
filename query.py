@@ -20,7 +20,7 @@ def run_query(id, email, phone, client):
     if (WHERE_STATEMENT == False):
         return
     query = f"""
-        SELECT order_search_id, order_product, order_status, order_delivery_date
+        SELECT order_search_id, order_product, order_status, order_delivery_date, client_first_name, client_last_name, order_delivery_time_range
         FROM `florissimo-378500.main.orders`
         {WHERE_STATEMENT}
         ORDER BY order_created_datetime DESC
@@ -33,8 +33,14 @@ def run_query(id, email, phone, client):
     for row in query_job:
         if (row["order_status"] == "matched" or row["order_status"] == "checkout"):
             pass
-        res.append([row["order_search_id"],
-                   row["order_product"], row["order_status"], row["order_delivery_date"]])
+        res.append([
+            row["order_search_id"],
+            row["order_product"],
+            row["order_status"],
+            row["order_delivery_date"],
+            row["order_delivery_time_range"],
+            f'{row["client_first_name"]} {row["client_last_name"]}'
+        ])
 
     return res
 
